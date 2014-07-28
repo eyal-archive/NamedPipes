@@ -27,7 +27,7 @@
 					{
 						byte[] output = Encoding.UTF8.GetBytes(content);
 
-						await client.WriteAsync(output, 0, output.Length);
+						await client.WriteAsync(output, 0, output.Length).ConfigureAwait(false);
 
 						await client.FlushAsync();
 					}

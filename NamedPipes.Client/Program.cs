@@ -59,7 +59,7 @@
 						               if (input.Length > 0)
 						               {
 							               input = input.Remove(input.Length - 1, 1);
-							               Console.Write(" \b");
+							               Console.Write(" \b"); 
 						               }
 					               }
 					               else

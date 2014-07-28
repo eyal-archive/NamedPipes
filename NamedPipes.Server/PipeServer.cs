@@ -25,15 +25,12 @@
 
 		public async Task Start()
 		{
-			await Task.Run(async () =>
-			               {
-							   Console.WriteLine("[thread: {0}] -> Starting server listener.", Thread.CurrentThread.ManagedThreadId);
+			Console.WriteLine("[thread: {0}] -> Starting server listener.", Thread.CurrentThread.ManagedThreadId);
 
-				               while (!_cancel.IsCancellationRequested)
-				               {
-					               await Listener();
-				               }
-			               }, _cancel);
+			while (!_cancel.IsCancellationRequested)
+			{
+				await Listener();
+			}
 		}
 
 		public void Stop()
@@ -51,7 +48,7 @@
 
 				Console.WriteLine("[thread: {0}] -> Client connected.", Thread.CurrentThread.ManagedThreadId);
 
-				ReadData(server);
+				await ReadData(server);
 
 				if (server.IsConnected)
 				{
@@ -60,13 +57,13 @@
 			}
 		}
 
-		private void ReadData(NamedPipeServerStream server)
+		private async Task ReadData(NamedPipeServerStream server)
 		{
 			Console.WriteLine("[thread: {0}] -> Reading data.", Thread.CurrentThread.ManagedThreadId);
 
 			byte[] buffer = new byte[255];
 
-			int length = server.Read(buffer, 0, buffer.Length);
+			int length = await server.ReadAsync(buffer, 0, buffer.Length, _cancel);
 
 			byte[] chunk = new byte[length];
 
