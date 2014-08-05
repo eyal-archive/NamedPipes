@@ -6,6 +6,7 @@ A simple client/server (console) application that demonstrates interprocess comm
 ### Application Type ###
 
 * Console application.
+* Client/Server
 
 ### Dependencies ###
 
